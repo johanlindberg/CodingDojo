@@ -13,6 +13,10 @@
   \"I\"
   >> (roman-numeral 2)
   \"II\"
+  >> (roman-numeral 3)
+  \"III\"
+  >> (roman-numeral 5)
+  \"V\"
   "
   (do ((result "")
        (i n (decf i)))
