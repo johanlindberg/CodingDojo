@@ -19,6 +19,12 @@
   \"V\"
   "
   (do ((result "")
-       (i n (decf i)))
+       (i n))
       ((eq i 0) result)
-    (setf result (format nil "~A~A" result "I"))))
+    (if (>= i 5)
+	(progn
+	  (setf result (format nil "~A~A" result "V"))
+	  (decf i 5))
+	(progn
+	  (setf result (format nil "~A~A" result "I"))
+	  (decf i)))))
