@@ -14,4 +14,7 @@
   >> (roman-numeral 2)
   \"II\"
   "
-  "I")
+  (do ((result "")
+       (i n (decf i)))
+      ((eq i 0) result)
+    (setf result (format nil "~A~A" result "I"))))
