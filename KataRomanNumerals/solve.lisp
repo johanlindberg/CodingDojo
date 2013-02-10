@@ -17,6 +17,14 @@
   \"III\"
   >> (roman-numeral 5)
   \"V\"
+  >> (roman-numeral 6)
+  \"VI\"
+  >> (roman-numeral 7)
+  \"VII\"
+  >> (roman-numeral 8)
+  \"VIII\"
+  >> (roman-numeral 4)
+  \"IV\"
   "
   (do ((result "")
        (i n))
