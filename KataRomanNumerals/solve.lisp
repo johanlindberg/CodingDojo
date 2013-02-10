@@ -11,5 +11,7 @@
 
   >> (roman-numeral 1)
   \"I\"
+  >> (roman-numeral 2)
+  \"II\"
   "
   "I")
