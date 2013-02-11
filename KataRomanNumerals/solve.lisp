@@ -22,7 +22,7 @@
   (\"CXXI\" \"CCXXXII\" \"CCCXLIII\" \"CDLIV\" \"DLXV\" \"DCLXXVI\" \"DCCLXXXVII\" \"DCCCXCVIII\" \"CMXCIX\")
 
   >> (roman-numeral 1000)
-  \"C\"
+  \"M\"
 
   "
   (let ((result ""))
