@@ -31,16 +31,19 @@
   (do ((result "")
        (i n))
       ((eq i 0) result)
-    (cond ((>= i 5)
+    (cond ((>= i 10)
+	   (progn
+	     (setf result (format nil "~A~A" result "X"))
+	     (decf i 10)))
+	  ((>= i 5)
 	   (progn
 	     (setf result (format nil "~A~A" result "V"))
 	     (decf i 5)))
-	   ((eq i 4)
-	    (progn
-	      (setf result (format nil "~A~A" result "IV"))
-	      (decf i 4)))
-	   ((<= i 3)
-	    (progn
-	      (setf result (format nil "~A~A" result "I"))
-	      (decf i))))))
-	   
+	  ((eq i 4)
+	   (progn
+	     (setf result (format nil "~A~A" result "IV"))
+	     (decf i 4)))
+	  ((<= i 3)
+	   (progn
+	     (setf result (format nil "~A~A" result "I"))
+	     (decf i))))))
