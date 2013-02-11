@@ -37,6 +37,10 @@
 	   (progn
 	     (setf result (format nil "~A~A" result "X"))
 	     (decf i 10)))
+	  ((eq i 9)
+	   (progn
+	     (setf result (format nil "~A~A" result "IX"))
+	     (decf i 9)))
 	  ((>= i 5)
 	   (progn
 	     (setf result (format nil "~A~A" result "V"))
