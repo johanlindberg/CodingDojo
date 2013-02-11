@@ -15,10 +15,13 @@
   >> (mapcar #'roman-numeral '(11 12 13 14 15 16 17 18 19 20))
   (\"XI\" \"XII\" \"XIII\" \"XIV\" \"XV\" \"XVI\" \"XVII\" \"XVIII\" \"XIX\" \"XX\")
 
-  >> (mapcar #'roman-numeral '(21 32 43 54 65 76 87 98 99))
-  (\"XXI\" \"XXXII\" \"XLIII\" \"LIV\" \"LXV\" \"LXXVI\" \"LXXXVII\" \"XCVIII\" \"XCIX\")
+  >> (mapcar #'roman-numeral '(21 32 43 54 65 76 87 98 99 100))
+  (\"XXI\" \"XXXII\" \"XLIII\" \"LIV\" \"LXV\" \"LXXVI\" \"LXXXVII\" \"XCVIII\" \"XCIX\" \"C\")
 
-  >> (roman-numeral 100)
+  >> (mapcar #'roman-numeral '(121 232 343 454 565 676 787 898 999))
+  (\"CXXI\" \"CCXXXII\" \"CCCXLIII\" \"CDLIV\" \"DLXV\" \"DCLXXVI\" \"DCCLXXXVII\" \"DCCCXCVIII\" \"CMXCIX\")
+
+  >> (roman-numeral 1000)
   \"C\"
 
   "
