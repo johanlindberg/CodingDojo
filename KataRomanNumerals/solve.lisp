@@ -23,9 +23,6 @@
 
   >> (mapcar #'roman-numeral '(31 32 33 34 35 36 37 38 39))
   (\"XXXI\" \"XXXII\" \"XXXIII\" \"XXXIV\" \"XXXV\" \"XXXVI\" \"XXXVII\" \"XXXVIII\" \"XXXIX\")
-
-  >> (roman-numeral 40)
-  \"XL\"
   "
   (do ((result "")
        (symbols '("X" "X" "X" "V")) ; Roman symbols and
