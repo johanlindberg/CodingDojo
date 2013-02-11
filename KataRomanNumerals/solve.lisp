@@ -25,6 +25,8 @@
   \"VIII\"
   >> (roman-numeral 4)
   \"IV\"
+  >> (roman-numeral 10)
+  \"X\"
   "
   (do ((result "")
        (i n))
