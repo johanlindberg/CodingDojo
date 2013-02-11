@@ -9,48 +9,11 @@
 (defun roman-numeral (number)
   "Returns a string with the Roman numeral representing <number>.
 
-  >> (roman-numeral 1)
-  \"I\"
-  >> (roman-numeral 2)
-  \"II\"
-  >> (roman-numeral 3)
-  \"III\"
-  >> (roman-numeral 5)
-  \"V\"
-  >> (roman-numeral 6)
-  \"VI\"
-  >> (roman-numeral 7)
-  \"VII\"
-  >> (roman-numeral 8)
-  \"VIII\"
-  >> (roman-numeral 4)
-  \"IV\"
-  >> (roman-numeral 10)
-  \"X\"
-  >> (roman-numeral 9)
-  \"IX\"
+  >> (mapcar #'roman-numeral '(1 2 3 5 6 7 8 4 10 9))
+  (\"I\" \"II\" \"III\" \"V\" \"VI\" \"VII\" \"VIII\" \"IV\" \"X\" \"IX\")
 
-  >> (roman-numeral 11)
-  \"XI\"
-  >> (roman-numeral 12)
-  \"XII\"
-  >> (roman-numeral 13)
-  \"XIII\"
-  >> (roman-numeral 14)
-  \"XIV\"
-  >> (roman-numeral 15)
-  \"XV\"
-  >> (roman-numeral 16)
-  \"XVI\"
-  >> (roman-numeral 17)
-  \"XVII\"
-  >> (roman-numeral 18)
-  \"XVIII\"
-  >> (roman-numeral 19)
-  \"XIX\"
-  >> (roman-numeral 20)
-  \"XX\"
-
+  >> (mapcar #'roman-numeral '(11 12 13 14 15 16 17 18 19 20))
+  (\"XI\" \"XII\" \"XIII\" \"XIV\" \"XV\" \"XVI\" \"XVII\" \"XVIII\" \"XIX\" \"XX\")
   "
   (do ((result "")
        (symbols '("X" "X" "V")) ; Roman symbols and
