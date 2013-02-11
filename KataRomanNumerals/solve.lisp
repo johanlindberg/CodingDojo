@@ -12,8 +12,14 @@
   >> (mapcar #'roman-numeral '(1 2 3 5 6 7 8 4 10 9))
   (\"I\" \"II\" \"III\" \"V\" \"VI\" \"VII\" \"VIII\" \"IV\" \"X\" \"IX\")
 
-  >> (roman-numeral 11)
-  \"XI\"
+  >> (mapcar #'roman-numeral '(11 12 13 14 15 16 17 18 19 20))
+  (\"XI\" \"XII\" \"XIII\" \"XIV\" \"XV\" \"XVI\" \"XVII\" \"XVIII\" \"XIX\" \"XX\")
+
+  >> (mapcar #'roman-numeral '(21 32 43 54 65 76 87 98 99))
+  (\"XXI\" \"XXXII\" \"XLIII\" \"LIV\" \"LXV\" \"LXXVI\" \"LXXXVII\" \"XCVIII\" \"XCIX\")
+
+  >> (roman-numeral 100)
+  \"C\"
 
   "
   (let ((result ""))
