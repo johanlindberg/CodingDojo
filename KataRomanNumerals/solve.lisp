@@ -14,6 +14,15 @@
 
   >> (mapcar #'roman-numeral '(11 12 13 14 15 16 17 18 19 20))
   (\"XI\" \"XII\" \"XIII\" \"XIV\" \"XV\" \"XVI\" \"XVII\" \"XVIII\" \"XIX\" \"XX\")
+
+  >> (mapcar #'roman-numeral '(21 22 23 24 25 26 27 28 29))
+  (\"XXI\" \"XXII\" \"XXIII\" \"XXIV\" \"XXV\" \"XXVI\" \"XXVII\" \"XXVIII\" \"XXIX\")
+
+  I'm expecting this test to fail which is why it's not part of the mapcar-bulk
+  of tests.
+
+  >> (roman-numeral 30)
+  \"XXX\"
   "
   (do ((result "")
        (symbols '("X" "X" "V")) ; Roman symbols and
