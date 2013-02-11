@@ -6,8 +6,8 @@
 ;;;; > (test-function #'roman-numeral :output T)
 
 ;; Implementation
-(defun roman-numeral (n)
-  "Returns a string with the Roman numeral representing n.
+(defun roman-numeral (number)
+  "Returns a string with the Roman numeral representing <number>.
 
   >> (roman-numeral 1)
   \"I\"
@@ -31,25 +31,19 @@
   \"IX\"
   "
   (do ((result "")
-       (i n))
-      ((eq i 0) result)
-    (cond ((>= i 10)
-	   (progn
-	     (setf result (format nil "~A~A" result "X"))
-	     (decf i 10)))
-	  ((eq i 9)
-	   (progn
-	     (setf result (format nil "~A~A" result "IX"))
-	     (decf i 9)))
-	  ((>= i 5)
-	   (progn
-	     (setf result (format nil "~A~A" result "V"))
-	     (decf i 5)))
-	  ((eq i 4)
-	   (progn
-	     (setf result (format nil "~A~A" result "IV"))
-	     (decf i 4)))
-	  ((<= i 3)
-	   (progn
-	     (setf result (format nil "~A~A" result "I"))
-	     (decf i))))))
+       (symbols '("X" "V")) ; Roman symbols and
+       (values  '( 10  5))  ; their values.
+       (n number))
+      ((eq n 0) result)
+    (let ((v (pop values))
+	  (s (pop symbols)))
+      (when (>= n v)
+	(setf result (format nil "~A~A" result s))
+	(decf n v))
+      (when (eq n (- v 1))
+	(setf result (format nil "~A~A~A" result "I" s))
+	(decf n (- v 1)))
+      (when (<= n 3)
+	(dotimes (i n)
+	  (setf result (format nil "~A~A" result "I")))
+	(setf n 0)))))
