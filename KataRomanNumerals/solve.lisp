@@ -26,9 +26,10 @@
 
   "
   (let ((result ""))
-    (dolist (numeral '((100 "M" "D" "C")
-		       ( 10 "C" "L" "X")
-		       (  1 "X" "V" "I")))
+    (dolist (numeral '((1000 " " " " "M")
+		       ( 100 "M" "D" "C")
+		       (  10 "C" "L" "X")
+		       (   1 "X" "V" "I")))
       (multiple-value-bind (n remainder)
 	  (truncate number (first numeral))
 	(setf number remainder)
