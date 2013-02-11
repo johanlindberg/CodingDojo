@@ -31,9 +31,6 @@
 
 (defun convert-roman-numeral (number s1 s2 s3)
   (let ((result ""))
-    (when (eq number 10)
-      (return-from convert-roman-numeral s1))
-
     (when (eq number 9)
       (return-from convert-roman-numeral (format nil "~A~A" s3 s1)))
 
