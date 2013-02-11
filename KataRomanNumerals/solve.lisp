@@ -11,8 +11,12 @@
 
   >> (mapcar #'roman-numeral '(1 2 3 5 6 7 8 4 10 9))
   (\"I\" \"II\" \"III\" \"V\" \"VI\" \"VII\" \"VIII\" \"IV\" \"X\" \"IX\")
+
+  >> (roman-numeral 11)
+  \"XI\"
+
   "
-  (convert-roman-numeral number "X" "V" "I"))
+ (convert-roman-numeral number "X" "V" "I"))
 
 (defun convert-roman-numeral (number s1 s2 s3)
   (let ((result ""))
