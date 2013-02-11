@@ -17,20 +17,19 @@
 (defun convert-roman-numeral (number s1 s2 s3)
   (let ((result ""))
     (when (eq number 10)
-      (setf result (format nil "~A~A" result s1))
-      (decf number 10))
+      (return-from convert-roman-numeral s1))
+
     (when (eq number 9)
-      (setf result (format nil "~A~A~A" result s3 s1))
-      (decf number 9))
+      (return-from convert-roman-numeral (format nil "~A~A" s3 s1)))
+
     (when (>= number 5)
       (setf result (format nil "~A~A" result s2))
       (decf number 5))
+
     (when (eq number 4)
-      (setf result (format nil "~A~A~A" result s3 s2))
-      (decf number 4))
-    (when (<= number 3)
-      (dotimes (i number)
-	(setf result (format nil "~A~A" result s3))
-	(decf number)))
+      (return-from convert-roman-numeral (format nil "~A~A" s3 s2)))
+
+    (dotimes (i number)
+      (setf result (format nil "~A~A" result s3)))
 
     result))
