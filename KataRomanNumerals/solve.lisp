@@ -18,11 +18,11 @@
   >> (mapcar #'roman-numeral '(21 32 43 54 65 76 87 98 99 100))
   (\"XXI\" \"XXXII\" \"XLIII\" \"LIV\" \"LXV\" \"LXXVI\" \"LXXXVII\" \"XCVIII\" \"XCIX\" \"C\")
 
-  >> (mapcar #'roman-numeral '(121 232 343 454 565 676 787 898 999))
-  (\"CXXI\" \"CCXXXII\" \"CCCXLIII\" \"CDLIV\" \"DLXV\" \"DCLXXVI\" \"DCCLXXXVII\" \"DCCCXCVIII\" \"CMXCIX\")
+  >> (mapcar #'roman-numeral '(121 232 343 454 565 676 787 898 999 1000))
+  (\"CXXI\" \"CCXXXII\" \"CCCXLIII\" \"CDLIV\" \"DLXV\" \"DCLXXVI\" \"DCCLXXXVII\" \"DCCCXCVIII\" \"CMXCIX\" \"M\")
 
-  >> (roman-numeral 1000)
-  \"M\"
+  >> (roman-numeral 1999)
+  \"MCMXCIX\"
 
   "
   (let ((result ""))
