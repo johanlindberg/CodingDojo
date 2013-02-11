@@ -16,7 +16,18 @@
   \"XI\"
 
   "
- (convert-roman-numeral number "X" "V" "I"))
+  (let ((result ""))
+    (dolist (numeral '((10 "C" "L" "X")
+		       ( 1 "X" "V" "I")))
+      (multiple-value-bind (n remainder)
+	  (truncate number (first numeral))
+	(setf number remainder)
+	(setf result (format nil "~A~A" result
+			     (convert-roman-numeral n
+						    (second numeral)
+						    (third numeral)
+						    (fourth numeral))))))
+    result))
 
 (defun convert-roman-numeral (number s1 s2 s3)
   (let ((result ""))
