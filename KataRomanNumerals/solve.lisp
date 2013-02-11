@@ -29,6 +29,28 @@
   \"X\"
   >> (roman-numeral 9)
   \"IX\"
+
+  >> (roman-numeral 11)
+  \"XI\"
+  >> (roman-numeral 12)
+  \"XII\"
+  >> (roman-numeral 13)
+  \"XIII\"
+  >> (roman-numeral 14)
+  \"XIV\"
+  >> (roman-numeral 15)
+  \"XV\"
+  >> (roman-numeral 16)
+  \"XVI\"
+  >> (roman-numeral 17)
+  \"XVII\"
+  >> (roman-numeral 18)
+  \"XVIII\"
+  >> (roman-numeral 19)
+  \"XIX\"
+  >> (roman-numeral 20)
+  \"XX\"
+
   "
   (do ((result "")
        (symbols '("X" "V")) ; Roman symbols and
