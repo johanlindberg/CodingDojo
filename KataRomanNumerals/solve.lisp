@@ -25,8 +25,8 @@
   \"XXX\"
   "
   (do ((result "")
-       (symbols '("X" "X" "V")) ; Roman symbols and
-       (values  '( 10  10  5))  ; their values.
+       (symbols '("X" "X" "X" "V")) ; Roman symbols and
+       (values  '( 10  10  10  5))  ; their values.
        (n number))
       ((eq n 0) result)
     (let ((v (pop values))
