@@ -1,11 +1,6 @@
 ;;;; Roman Numerals
 ;;;; --------------
-;;;;
-;;;; > (load "/Users/johanlindberg/Projects/doctest/doctest.lisp")
-;;;; > (use-package :doctest)
-;;;; > (test-function #'roman-numeral :output T)
 
-;; Implementation
 (defun roman-numeral (number)
   "Returns a string with the Roman numeral representing <number>.
 
@@ -24,6 +19,11 @@
   >> (mapcar #'roman-numeral '(1999 2000 2500 2499 3333 3999))
   (\"MCMXCIX\" \"MM\" \"MMD\" \"MMCDXCIX\" \"MMMCCCXXXIII\" \"MMMCMXCIX\")
   "
+  (assert (and (> number 0)
+	       (< number 4000))
+	  (number)
+	  "Number out of range for Roman numerals: ~:D" number)
+
   (let ((result (make-array 1 
 			    :adjustable t 
 			    :element-type 'character
