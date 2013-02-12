@@ -21,9 +21,8 @@
   >> (mapcar #'roman-numeral '(121 232 343 454 565 676 787 898 999 1000))
   (\"CXXI\" \"CCXXXII\" \"CCCXLIII\" \"CDLIV\" \"DLXV\" \"DCLXXVI\" \"DCCLXXXVII\" \"DCCCXCVIII\" \"CMXCIX\" \"M\")
 
-  >> (roman-numeral 1999)
-  \"MCMXCIX\"
-
+  >> (mapcar #'roman-numeral '(1999 2000 2500 2499 3333 3999))
+  (\"MCMXCIX\" \"MM\" \"MMD\" \"MMCDXCIX\" \"MMMCCCXXXIII\" \"MMMCMXCIX\")
   "
   (let ((result ""))
     (dolist (numeral '((1000 " " " " "M")
