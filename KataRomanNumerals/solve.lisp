@@ -32,26 +32,20 @@
       (multiple-value-bind (n remainder)
 	  (truncate number (first numeral))
 	(setf number remainder)
-	(setf result (format nil "~A~A" result
-			     (convert-roman-numeral n
-						    (second numeral)
-						    (third numeral)
-						    (fourth numeral))))))
-    result))
+	(let ((s1 (second numeral))
+	      (s2 (third numeral))
+	      (s3 (fourth numeral)))
+	  (when (eq n 9)
+	    (setf result (format nil "~A~A~A" result s3 s1))
+	    (decf n 9))
+	  (when (>= n 5)
+	    (setf result (format nil "~A~A" result s2))
+	    (decf n 5))
+	  (when (eq n 4)
+	    (setf result (format nil "~A~A~A" result s3 s2))
+	    (decf n 4))
+	  (dotimes (i n)
+	    (setf result (format nil "~A~A" result s3))
+	    (decf n)))))
 
-(defun convert-roman-numeral (number s1 s2 s3)
-  (let ((result ""))
-    (when (eq number 9)
-      (return-from convert-roman-numeral (format nil "~A~A" s3 s1)))
-
-    (when (>= number 5)
-      (setf result (format nil "~A~A" result s2))
-      (decf number 5))
-
-    (when (eq number 4)
-      (return-from convert-roman-numeral (format nil "~A~A" s3 s2)))
-
-    (dotimes (i number)
-      (setf result (format nil "~A~A" result s3)))
-
-    result))
+      result))
