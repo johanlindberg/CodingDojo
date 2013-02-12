@@ -24,30 +24,35 @@
   >> (mapcar #'roman-numeral '(1999 2000 2500 2499 3333 3999))
   (\"MCMXCIX\" \"MM\" \"MMD\" \"MMCDXCIX\" \"MMMCCCXXXIII\" \"MMMCMXCIX\")
   "
-  (let ((result ""))
-    (dolist (numeral '((1000 " " " " "M")
-		       ( 100 "M" "D" "C")
-		       (  10 "C" "L" "X")
-		       (   1 "X" "V" "I")))
+  (let ((result (make-array 1 
+			    :adjustable t 
+			    :element-type 'character
+			    :fill-pointer 0)))
+    (dolist (numeral '((1000 #\* #\* #\M)
+		       ( 100 #\M #\D #\C)
+		       (  10 #\C #\L #\X)
+		       (   1 #\X #\V #\I)))
       (let ((divisor (first numeral))
 	    (s1 (second numeral))
 	    (s2 (third numeral))
 	    (s3 (fourth numeral)))
 	(multiple-value-bind (n remainder)
 	    (truncate number divisor)
-
+	  
 	  (setf number remainder)
 	  (when (eq n 9)
-	    (setf result (format nil "~A~A~A" result s3 s1))
+	    (vector-push-extend s3 result)
+	    (vector-push-extend s1 result)
 	    (decf n 9))
 	  (when (>= n 5)
-	    (setf result (format nil "~A~A" result s2))
+	    (vector-push-extend s2 result)
 	    (decf n 5))
 	  (when (eq n 4)
-	    (setf result (format nil "~A~A~A" result s3 s2))
+	    (vector-push-extend s3 result)
+	    (vector-push-extend s2 result)
 	    (decf n 4))
 	  (dotimes (i n)
-	    (setf result (format nil "~A~A" result s3))
+	    (vector-push-extend s3 result)
 	    (decf n)))))
-
-      result))
+    
+    result))
