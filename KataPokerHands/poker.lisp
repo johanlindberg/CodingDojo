@@ -9,6 +9,12 @@
 
   >> (rank '2H '2S)
   nil
+
+  >> (rank '2H '3H '4H '5H '6H)
+  t
+
+  >> (rank '2H '3H '4H '5H '6H '2S)
+  nil
   "
   (let ((hearts '(2H 3H))
 	(spades '(2S)))
