@@ -5,16 +5,16 @@
   "Rank <cards> (using poker rules) and return which is the winner and why."
   t)
 
-(defun same-suit-p (&rest cards)
-  "Returns t if all <cards> are of the same suit, otherwise returns nil.
+(defun same-suit-p (hand)
+  "Returns t if all cards in <hand> are of the same suit, otherwise returns nil.
 
-  >> (same-suit-p '2H '3H) t
-  >> (same-suit-p '2H '2S) nil
-  >> (same-suit-p '2H '3H '4H '5H '6H) t
-  >> (same-suit-p '2H '3H '4H '5H '6H '2S) nil
-  >> (same-suit-p '2S '2H '3H '4H '5H '6H) nil
-  >> (same-suit-p '2S '2D '2H '2C) nil
-  >> (same-suit-p '2D '3D) t
+  >> (same-suit-p '(2H 3H)) t
+  >> (same-suit-p '(2H 2S)) nil
+  >> (same-suit-p '(2H 3H 4H 5H 6H)) t
+  >> (same-suit-p '(2H 3H 4H 5H 6H 2S)) nil
+  >> (same-suit-p '(2S 2H 3H 4H 5H 6H)) nil
+  >> (same-suit-p '(2S 2D 2H 2C)) nil
+  >> (same-suit-p '(2D 3D)) t
 
   "
   (let ((clubs    '(2C 3C 4C 5C 6C 7C 8C 9C TC JC QC KC AC))
@@ -23,17 +23,18 @@
 	(spades   '(2S 3S 4S 5S 6S 7S 8S 9S TS JS QS KS AS)))
     (dolist (suit (list clubs diamonds hearts spades))
       (let ((same-suit t))
-	(dolist (card cards)
+	(dolist (card hand)
 	  (unless (member card suit)
 	    (setq same-suit nil)
 	    (return)))
 	(when same-suit
 	  (return-from same-suit-p t))))))
 
-(defun flush-p (&rest cards)
-  "Returns t if <cards> are 5 cards from the same suit
+(defun flush-p (hand)
+  "Returns t if all 5 cards in <hand> are from the same suit.
 
-  >> (flush-p '2S '3S '4S '5S '6S)
+  >> (flush-p '(2S 3S 4S 5S 6S))
   t
   "
-  nil)
+  (and (eq 5 (length hand))
+       (same-suit-p hand)))
