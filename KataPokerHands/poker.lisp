@@ -29,3 +29,11 @@
 	    (return)))
 	(when same-suit
 	  (return-from same-suit-p t))))))
+
+(defun flush-p (&rest cards)
+  "Returns t if <cards> are 5 cards from the same suit
+
+  >> (flush-p '2S '3S '4S '5S '6S)
+  t
+  "
+  nil)
