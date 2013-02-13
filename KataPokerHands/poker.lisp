@@ -1,8 +1,8 @@
 ;;;; Poker Hands
 ;;;; -----------
 
-(defun rank (card1 card2)
-  "Rank <cards> (using poker rules) and return which is the winner and why."
+(defun rank (hand)
+  "Rank <hand> (using poker rules) and returns the score and a description."
   t)
 
 (defun same-suit-p (hand)
@@ -33,8 +33,19 @@
 (defun flush-p (hand)
   "Returns t if all 5 cards in <hand> are from the same suit.
 
-  >> (flush-p '(2S 3S 4S 5S 6S))
-  t
+  >> (flush-p '(2S 3S 4S 5S 6S)) t
+  >> (flush-p '(2S 3S 4S 5S)) nil
+  >> (flush-p '(2H 3S 4S 5S 6S)) nil
+  >> (flush-p '(2S 3S 4S 5S 6H)) nil
+  >> (flush-p '(2H 3H 4H 5H 6H)) t
   "
   (and (eq 5 (length hand))
        (same-suit-p hand)))
+
+(defun high-card (hand)
+  "Returns the score and the highest card in <hand>.
+
+  >> (high-card '(2S 3S))
+  3S
+  "
+  nil)
