@@ -14,7 +14,16 @@
 			   2S 2H 2D 2C))
 
 (defun rank (hand)
-  "Rank <hand> (using poker rules) and returns the score and a description."
+  "Rank <hand> (using poker rules) and returns a list with scores.
+
+   Score lists are compared from left to right until a difference is found.
+   Whichever hand has the highest score in that position wins. If both lists
+   are equal, it's a tie.
+
+  >> (rank '(JS 6H 4C TD 6S))
+  (2 6 11 10 4) ; The 2 is for the pair. The 6 is for the score of the pair.
+                ; The rest of the scores are the rest of the cards high to low.
+  "
   t)
 
 ;; Scoring functions
