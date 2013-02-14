@@ -50,25 +50,27 @@
   (and (eq 5 (length hand))
        (same-suit-p hand)))
 
+(defun score (card)
+  "Returns the score for <card>.
+  
+  >> (mapcar #'score '(2C 3H 4S 5D 6C 7H 8S 9D TC JH QS KD AC))
+  (2 3 4 5 6 7 8 9 10 11 12 13 14)
+  "
+  (+ 1 (ceiling (/ (length (member card *values*)) 4))))
+
 (defun high-card (hand)
   "Returns a list with the score and the symbol of the highest card in, <hand>.
 
-  >> (high-card '(2S 3S))
-  (3 3S)
-
-  >> (high-card '(AS 3H AH))
-  (14 AS)
-
-  >> (high-card '(3H AH))
-  (14 AH)
+  >> (mapcar #'high-card '((2S 3S) (AS 3H AH)(3H AH)))
+  (3S AS AH)
 
   "
   (let ((highest-card '2C)
 	(highest-score 0))
     (dolist (card hand)
-      (let ((score (+ 1 (ceiling (/ (length (member card *values*)) 4)))))
-	(when (> score highest-score)
-	  (setq highest-score score
-		highest-card  card))))
+      (let ((s (score card)))
+	(when (> s highest-score)
+	  (setq highest-score s
+		highest-card card))))
 
-    (list highest-score highest-card)))
+    highest-card))
