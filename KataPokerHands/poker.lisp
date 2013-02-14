@@ -38,7 +38,19 @@
   >> (multiple-value-list (three-of-a-kind '(2S 2D 2C)))
   (2 (2S 2D 2C))
   "
-  t)
+  (let ((score 0)
+	(count 1))
+    (dolist (s (sort (mapcar #'score hand) #'>))
+      (if (eql s score)
+	  (progn
+	    (incf count)
+	    (when (eq count 3)
+	      (return-from three-of-a-kind
+		(values score
+			(remove-if-not #'(lambda (card)
+					   (eq score (score card))) hand)))))
+	  (setq score s count 1)))))
+    
 
 (defun two-pair-p (hand)
   "Returns a list with the scores from the pairs if <hand> holds two pairs,
