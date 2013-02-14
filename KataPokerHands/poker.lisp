@@ -50,10 +50,13 @@
        (same-suit-p hand)))
 
 (defun high-card (hand)
-  "Returns the score and the highest card in <hand>.
+  "Returns a list with the score and the symbol of the highest card in, <hand>.
 
   >> (high-card '(2S 3S))
-  3S
+  (3 3S)
+
+  >> (high-card '(AS 3H AH))
+  (14 AS)
   "
   (let ((highest-card '2C))
     (dolist (card hand)
