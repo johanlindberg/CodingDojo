@@ -58,6 +58,10 @@
 
   >> (high-card '(AS 3H AH))
   (14 AS)
+
+  >> (high-card '(3H AH))
+  (14 AH)
+
   "
   (let ((highest-card '2C)
 	(highest-score 0))
