@@ -19,6 +19,15 @@
 
 ;; Scoring functions
 
+(defun straight-flush-p (hand)
+  "Returns the score of the highest card if <hand> contains a straight flush,
+   otherwise nil.
+
+  >> (straight-flush-p '(2S 3S 4S 5S 6S))
+  6
+  "
+  t)
+
 (defun four-of-a-kind-p (hand)
   "Returns the score and the symbols of the cards, if <hand> contains three
    of a kind, otherwise nil.
