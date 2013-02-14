@@ -37,20 +37,14 @@
 
   >> (multiple-value-list (three-of-a-kind '(2S 2D 2C)))
   (2 (2S 2D 2C))
+
+  >> (multiple-value-list (three-of-a-kind '(2S 3D 4C)))
+  (nil)
+
+  >> (multiple-value-list (three-of-a-kind '(4C 2S 4H 3D 4D)))
+  (4 (4C 4H 4D))
   "
-  (let ((score 0)
-	(count 1))
-    (dolist (s (sort (mapcar #'score hand) #'>))
-      (if (eql s score)
-	  (progn
-	    (incf count)
-	    (when (eq count 3)
-	      (return-from three-of-a-kind
-		(values score
-			(remove-if-not #'(lambda (card)
-					   (eq score (score card))) hand)))))
-	  (setq score s count 1)))))
-    
+  (n-of-a-kind 3 hand))
 
 (defun two-pair-p (hand)
   "Returns a list with the scores from the pairs if <hand> holds two pairs,
@@ -85,14 +79,7 @@
   >> (multiple-value-list (pair-p '(3S 4H 5D)))
   (nil)  
   "
-  (let ((score 0))
-    (dolist (s (sort (mapcar #'score hand) #'>))
-      (if (eql s score)
-	  (return-from pair-p
-	    (values score
-		    (remove-if-not #'(lambda (card)
-				       (eq score (score card))) hand)))
-	  (setq score s)))))
+  (n-of-a-kind 2 hand))
 
 (defun high-card (hand)
   "Returns a list with the score and the symbol of the highest card in <hand>.
@@ -111,6 +98,32 @@
     highest-card))
 
 ;; Helper functions
+
+(defun n-of-a-kind (n hand)
+  "Returns the score and the symbols of the cards, if <hand> contains <n>
+   of a kind, otherwise nil.
+
+  >> (multiple-value-list (n-of-a-kind 3 '(2S 2D 2C)))
+  (2 (2S 2D 2C))
+
+  >> (multiple-value-list (n-of-a-kind 3 '(2S 3D 4C)))
+  (nil)
+
+  >> (multiple-value-list (n-of-a-kind 3 '(4C 2S 4H 3D 4D)))
+  (4 (4C 4H 4D))
+  "
+  (let ((score 0)
+	(count 1))
+    (dolist (s (sort (mapcar #'score hand) #'>))
+      (if (eql s score)
+	  (progn
+	    (incf count)
+	    (when (eq count n)
+	      (return-from n-of-a-kind
+		(values score
+			(remove-if-not #'(lambda (card)
+					   (eq score (score card))) hand)))))
+	  (setq score s count 1)))))
 
 (defun score (card)
   "Returns the score for <card>.
