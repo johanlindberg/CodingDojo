@@ -17,6 +17,47 @@
   "Rank <hand> (using poker rules) and returns the score and a description."
   t)
 
+;; Scoring functions
+
+(defun flush-p (hand)
+  "Returns t if all 5 cards in <hand> are from the same suit.
+
+  >> (flush-p '(2S 3S 4S 5S 6S)) t
+  >> (flush-p '(2S 3S 4S 5S)) nil
+  >> (flush-p '(2H 3S 4S 5S 6S)) nil
+  >> (flush-p '(2S 3S 4S 5S 6H)) nil
+  >> (flush-p '(2H 3H 4H 5H 6H)) t
+  "
+  (and (eq 5 (length hand))
+       (same-suit-p hand)))
+
+(defun high-card (hand)
+  "Returns a list with the score and the symbol of the highest card in, <hand>.
+
+  >> (mapcar #'high-card '((2S 3S) (AS 3H AH)(3H AH)))
+  (3S AS AH)
+
+  "
+  (let ((highest-card '2C)
+	(highest-score 0))
+    (dolist (card hand)
+      (let ((s (score card)))
+	(when (> s highest-score)
+	  (setq highest-score s
+		highest-card card))))
+
+    highest-card))
+
+;; Helper functions
+
+(defun score (card)
+  "Returns the score for <card>.
+  
+  >> (mapcar #'score '(2C 3H 4S 5D 6C 7H 8S 9D TC JH QS KD AC))
+  (2 3 4 5 6 7 8 9 10 11 12 13 14)
+  "
+  (+ 1 (ceiling (/ (length (member card *values*)) 4))))
+
 (defun same-suit-p (hand)
   "Returns t if all cards in <hand> are of the same suit, otherwise returns nil.
 
@@ -38,39 +79,3 @@
       (when same-suit
 	(return-from same-suit-p t)))))
 
-(defun flush-p (hand)
-  "Returns t if all 5 cards in <hand> are from the same suit.
-
-  >> (flush-p '(2S 3S 4S 5S 6S)) t
-  >> (flush-p '(2S 3S 4S 5S)) nil
-  >> (flush-p '(2H 3S 4S 5S 6S)) nil
-  >> (flush-p '(2S 3S 4S 5S 6H)) nil
-  >> (flush-p '(2H 3H 4H 5H 6H)) t
-  "
-  (and (eq 5 (length hand))
-       (same-suit-p hand)))
-
-(defun score (card)
-  "Returns the score for <card>.
-  
-  >> (mapcar #'score '(2C 3H 4S 5D 6C 7H 8S 9D TC JH QS KD AC))
-  (2 3 4 5 6 7 8 9 10 11 12 13 14)
-  "
-  (+ 1 (ceiling (/ (length (member card *values*)) 4))))
-
-(defun high-card (hand)
-  "Returns a list with the score and the symbol of the highest card in, <hand>.
-
-  >> (mapcar #'high-card '((2S 3S) (AS 3H AH)(3H AH)))
-  (3S AS AH)
-
-  "
-  (let ((highest-card '2C)
-	(highest-score 0))
-    (dolist (card hand)
-      (let ((s (score card)))
-	(when (> s highest-score)
-	  (setq highest-score s
-		highest-card card))))
-
-    highest-card))
