@@ -19,6 +19,15 @@
 
 ;; Scoring functions
 
+(defun four-of-a-kind (hand)
+  "Returns the score and the symbols of the cards, if <hand> contains three
+   of a kind, otherwise nil.
+
+  >> (multiple-value-list (four-of-a-kind '(2S 2D 2C 2H 4D)))
+  (2 (2S 2D 2C 2H))
+  "
+  (n-of-a-kind 4 hand))
+
 (defun flush-p (hand)
   "Returns t if all 5 cards in <hand> are from the same suit.
 
