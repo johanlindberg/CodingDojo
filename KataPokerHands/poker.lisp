@@ -26,7 +26,10 @@
   >> (straight-flush-p '(2S 3S 4S 5S 6S))
   6
   "
-  t)
+  (let ((score (straight-p hand)))
+    (when (and score
+	       (flush-p hand))
+      (return-from straight-flush-p score))))
 
 (defun four-of-a-kind-p (hand)
   "Returns the score and the symbols of the cards, if <hand> contains three
