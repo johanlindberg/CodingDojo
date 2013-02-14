@@ -28,6 +28,29 @@
   "
   (n-of-a-kind-p 4 hand))
 
+(defun full-house-p (hand)
+  "Returns the score of the three-of-a-kind if <hand> contains a full house,
+   otherwise nil.
+
+  >> (full-house-p '(2S 2H 2D 3D 3S))
+  2
+  "
+  t)
+
+(defun flush-p (hand)
+  "Returns the score of the highest card if all 5 cards in <hand> are from
+   the same suit.
+
+  >> (flush-p '(2S 3S 4S 5S 6S)) 6
+  >> (flush-p '(2S 3S 4S 5S)) nil
+  >> (flush-p '(2H 3S 4S 5S 6S)) nil
+  >> (flush-p '(2S 3S 4S 5S 6H)) nil
+  >> (flush-p '(2H 3H 4H 5H 6H)) 6
+  "
+  (when (and (eq 5 (length hand))
+	     (same-suit-p hand))
+    (score (high-card hand))))
+
 (defun straight-p (hand)
   "Returns the score of the highest card if <hand> contains 5 cards with
    consecutive values, otherwise nil.
@@ -43,20 +66,6 @@
 	  (setq prev score)
 	  (return-from straight-p)))
     (car scored-hand)))
-
-(defun flush-p (hand)
-  "Returns the score of the highest card if all 5 cards in <hand> are from
-   the same suit.
-
-  >> (flush-p '(2S 3S 4S 5S 6S)) 6
-  >> (flush-p '(2S 3S 4S 5S)) nil
-  >> (flush-p '(2H 3S 4S 5S 6S)) nil
-  >> (flush-p '(2S 3S 4S 5S 6H)) nil
-  >> (flush-p '(2H 3H 4H 5H 6H)) 6
-  "
-  (when (and (eq 5 (length hand))
-	     (same-suit-p hand))
-    (score (high-card hand))))
 
 (defun three-of-a-kind-p (hand)
   "Returns the score and the symbols of the cards, if <hand> contains three
