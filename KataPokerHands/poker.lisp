@@ -31,6 +31,14 @@
   (and (eq 5 (length hand))
        (same-suit-p hand)))
 
+(defun pair-p (hand)
+  "Returns the score of the pair cards if <hand> contains a pair, otherwise nil.
+
+  >> (pair-p '(2H 2S))
+  2
+  "
+  nil)
+
 (defun high-card (hand)
   "Returns a list with the score and the symbol of the highest card in, <hand>.
 
