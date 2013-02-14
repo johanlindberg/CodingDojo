@@ -37,7 +37,15 @@
   >> (two-pair-p '(2H 3H 2S 3S AH))
   (3 2)
   "
-  t)
+  (let ((first-pair (pair-p hand)))
+    (when first-pair
+      (let ((new-hand hand)
+	    (second-pair 0))
+	(dolist (card hand)
+	  (when (eq first-pair (score card))
+	    (nremove card new-hand)))
+	(when (setq second-pair (pair-p new-hand))
+	  (return-from two-pair-p (list first-pair second-pair)))))))
 
 (defun pair-p (hand)
   "Returns the score of the pair cards if <hand> contains a pair, otherwise nil.
