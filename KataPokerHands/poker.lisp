@@ -23,8 +23,8 @@
   "Returns the score of the highest card if <hand> contains a straight flush,
    otherwise nil.
 
-  >> (straight-flush-p '(2S 3S 4S 5S 6S))
-  6
+  >> (mapcar #'straight-flush-p '((2S 3S 4S 5S 6S) (2S 3S 4S 5S 6D) (2S 3S 4S 5S 7S)))
+  (6 nil nil)
   "
   (let ((score (straight-p hand)))
     (when (and score
@@ -44,14 +44,8 @@
   "Returns the score of the three-of-a-kind if <hand> contains a full house,
    otherwise nil.
 
-  >> (full-house-p '(2S 2H 2D 3D 3S))
-  2
-
-  >> (full-house-p '(3S 2H 2D 3D 2S))
-  2
-
-  >> (full-house-p '(2S 2H 2D 2C 3S))
-  nil
+  >> (mapcar #'full-house-p '((2S 2H 2D 3D 3S) (3S 2H 2D 3D 2S) (2S 2H 2D 2C 3S)))
+  (2 2 nil)
   "
   (multiple-value-bind (score cards)
       (n-of-a-kind 3 hand)
@@ -65,11 +59,9 @@
   "Returns the score of the highest card if all 5 cards in <hand> are from
    the same suit.
 
-  >> (flush-p '(2S 3S 4S 5S 6S)) 6
-  >> (flush-p '(2S 3S 4S 5S)) nil
-  >> (flush-p '(2H 3S 4S 5S 6S)) nil
-  >> (flush-p '(2S 3S 4S 5S 6H)) nil
-  >> (flush-p '(2H 3H 4H 5H 6H)) 6
+  >> (mapcar #'flush-p '((2S 3S 4S 5S 6S) (2S 3S 4S 5S) (2H 3S 4S 5S 6S)
+                         (2S 3S 4S 5S 6H) (2H 3H 4H 5H 6H)))
+  (6 nil nil nil 6)
   "
   (when (and (eq 5 (length hand))
 	     (same-suit-p hand))
@@ -196,14 +188,9 @@
 (defun same-suit-p (hand)
   "Returns t if all cards in <hand> are of the same suit, otherwise returns nil.
 
-  >> (same-suit-p '(2H 3H)) t
-  >> (same-suit-p '(2H 2S)) nil
-  >> (same-suit-p '(2H 3H 4H 5H 6H)) t
-  >> (same-suit-p '(2H 3H 4H 5H 6H 2S)) nil
-  >> (same-suit-p '(2S 2H 3H 4H 5H 6H)) nil
-  >> (same-suit-p '(2S 2D 2H 2C)) nil
-  >> (same-suit-p '(2D 3D)) t
-
+  >> (mapcar #'same-suit-p '((2H 3H) (2H 2S) (2H 3H 4H 5H 6H) (2H 3H 4H 5H 6H 2S)
+                             (2S 2H 3H 4H 5H 6H) (2S 2D 2H 2C) (2D 3D)))
+  (t nil t nil nil nil t)
   "
   (dolist (suit (list *clubs* *diamonds* *hearts* *spades*))
     (let ((same-suit t))
