@@ -31,11 +31,20 @@
   (and (eq 5 (length hand))
        (same-suit-p hand)))
 
+(defun two-pair-p (hand)
+  "Returns a list with the scores from the pairs if <hand> holds two pairs, otherwise nil.
+
+  >> (two-pair-p '(2H 3H 2S 3S AH))
+  (3 2)
+  "
+  t)
+
 (defun pair-p (hand)
   "Returns the score of the pair cards if <hand> contains a pair, otherwise nil.
 
-  >> (pair-p '(2H 2S 3S))
-  2
+  >> (mapcar #'pair-p '((2H 2S 3S) (2H 2S 3S 3H) (3H 3S 2S 2H) (AH AS AC KH KS)
+                        (2H 3H 4H 5H 6H)))
+  (2 3 3 14 nil)
   "
   (let ((score 1))
     (print (sort (mapcar #'score hand) #'>))
