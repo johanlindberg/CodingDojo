@@ -34,10 +34,15 @@
 (defun pair-p (hand)
   "Returns the score of the pair cards if <hand> contains a pair, otherwise nil.
 
-  >> (pair-p '(2H 2S))
+  >> (pair-p '(2H 2S 3S))
   2
   "
-  nil)
+  (let ((score 1))
+    (print (sort (mapcar #'score hand) #'>))
+    (dolist (s (sort (mapcar #'score hand) #'>))
+      (if (eql s score)
+	  (return-from pair-p score))
+	  (setq score s))))
 
 (defun high-card (hand)
   "Returns a list with the score and the symbol of the highest card in, <hand>.
