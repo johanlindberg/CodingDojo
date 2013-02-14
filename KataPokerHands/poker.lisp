@@ -35,7 +35,13 @@
   >> (straight-p '(2S 3S 4S 5S 6S))
   6
   "
-  t)
+  (let* ((scored-hand (sort (mapcar #'score hand) #'>))
+	 (prev (car scored-hand)))
+    (dolist (score (cdr scored-hand))
+      (if (eq prev (+ 1 score))
+	  (setq prev score)
+	  (return-from straight-p)))
+    (car scored-hand)))
 
 (defun flush-p (hand)
   "Returns t if all 5 cards in <hand> are from the same suit.
