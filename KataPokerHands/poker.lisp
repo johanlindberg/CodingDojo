@@ -34,6 +34,12 @@
 
   >> (full-house-p '(2S 2H 2D 3D 3S))
   2
+
+  >> (full-house-p '(3S 2H 2D 3D 2S))
+  2
+
+  >> (full-house-p '(2S 2H 2D 2C 3S))
+  nil
   "
   (multiple-value-bind (score cards)
       (n-of-a-kind 3 hand)
