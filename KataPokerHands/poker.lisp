@@ -7,10 +7,11 @@
 (defparameter *hearts*   '(2H 3H 4H 5H 6H 7H 8H 9H TH JH QH KH AH))
 (defparameter *spades*   '(2S 3S 4S 5S 6S 7S 8S 9S TS JS QS KS AS))
 
-(defparameter *values*   '(2C 2D 2H 2S 3C 3D 3H 3S 4C 4D 4H 4S 5C 5D 5H 5S
-			   6C 6D 6H 6S 7C 7D 7H 7S 8C 8D 8H 8S 9C 9D 9H 9S
-			   TC TD TH TS JC JD JH JS QC QD QH QS KC KD KH KS
-			   AC AD AH AS))
+(defparameter *values*   '(AS AH AD AC KS KH KD KC QS QH QD QC
+			   JS JH JD JC TS TH TD TC 9S 9H 9D 9C
+			   8S 8H 8D 8C 7S 7H 7D 7C 6S 6H 6D 6C
+			   5S 5H 5D 5C 4S 4H 4D 4C 3S 3H 3D 3C
+			   2S 2H 2D 2C))
 
 (defun rank (hand)
   "Rank <hand> (using poker rules) and returns the score and a description."
@@ -58,9 +59,12 @@
   >> (high-card '(AS 3H AH))
   (14 AS)
   "
-  (let ((highest-card '2C))
+  (let ((highest-card '2C)
+	(highest-score 0))
     (dolist (card hand)
-      (when (< (length (member card *values*))
-	       (length (member highest-card *values*)))
-	(setq highest-card card)))
-    highest-card))
+      (let ((score (ceiling (/ (+ 1 (length (member card *values*))) 4))))
+	(when (> score highest-score)
+	  (setq highest-score score
+		highest-card  card))))
+
+    (list highest-score highest-card)))
