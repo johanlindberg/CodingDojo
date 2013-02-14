@@ -31,6 +31,15 @@
   (and (eq 5 (length hand))
        (same-suit-p hand)))
 
+(defun three-of-a-kind (hand)
+  "Returns the score and the symbols of the cards, if <hand> contains three
+   of a kind, otherwise nil.
+
+  >> (multiple-value-list (three-of-a-kind '(2S 2D 2C)))
+  (2 (2S 2D 2C))
+  "
+  t)
+
 (defun two-pair-p (hand)
   "Returns a list with the scores from the pairs if <hand> holds two pairs,
    otherwise nil.
