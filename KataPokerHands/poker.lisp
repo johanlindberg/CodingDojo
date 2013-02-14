@@ -28,6 +28,15 @@
   "
   (n-of-a-kind-p 4 hand))
 
+(defun straight-p (hand)
+  "Returns the score of the highest card if <hand> contains 5 cards with
+   consecutive values, otherwise nil.
+
+  >> (straight-p '(2S 3S 4S 5S 6S))
+  6
+  "
+  t)
+
 (defun flush-p (hand)
   "Returns t if all 5 cards in <hand> are from the same suit.
 
