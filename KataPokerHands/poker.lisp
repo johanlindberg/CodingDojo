@@ -32,41 +32,52 @@
        (same-suit-p hand)))
 
 (defun two-pair-p (hand)
-  "Returns a list with the scores from the pairs if <hand> holds two pairs, otherwise nil.
+  "Returns a list with the scores from the pairs if <hand> holds two pairs,
+   otherwise nil.
 
-  >> (two-pair-p '(2H 3H 2S 3S AH))
-  (3 2)
+  >> (multiple-value-list (two-pair-p '(2H 3H 2S 3S AH)))
+  ((3 2) ((3H 3S) (2H 2S)))
   "
-  (let ((first-pair (pair-p hand)))
+  (multiple-value-bind (first-score first-pair)
+      (pair-p hand)
     (when first-pair
-      (let ((new-hand hand)
-	    (second-pair 0))
-	(dolist (card hand)
-	  (when (eq first-pair (score card))
-	    (nremove card new-hand)))
-	(when (setq second-pair (pair-p new-hand))
-	  (return-from two-pair-p (list first-pair second-pair)))))))
+      (multiple-value-bind (second-score second-pair)
+	  (pair-p (remove-if #'(lambda (card)
+				 (eq first-score (score card))) hand))
+	(when second-pair
+	  (return-from two-pair-p (values (list first-score second-score)
+					  (list first-pair second-pair))))))))
 
 (defun pair-p (hand)
-  "Returns the score of the pair cards if <hand> contains a pair, otherwise nil.
+  "Returns the score and the symbols of the pair cards, if <hand> contains
+   a pair, otherwise nil.
 
   >> (mapcar #'pair-p '((2H 2S 3S) (2H 2S 3S 3H) (3H 3S 2S 2H) (AH AS AC KH KS)
                         (2H 3H 4H 5H 6H)))
   (2 3 3 14 nil)
+
+  XXX Should I do something about this one? It's not really a problem the way
+  I see it, but perhaps it's a bit unexpected.
+  >> (multiple-value-list (pair-p '(3S 3H 3D)))
+  (3 (3S 3H 3D))
+
+  >> (multiple-value-list (pair-p '(3S 4H 5D)))
+  (nil)  
   "
-  (let ((score 1))
-    (print (sort (mapcar #'score hand) #'>))
+  (let ((score 0))
     (dolist (s (sort (mapcar #'score hand) #'>))
       (if (eql s score)
-	  (return-from pair-p score))
-	  (setq score s))))
+	  (return-from pair-p
+	    (values score
+		    (remove-if-not #'(lambda (card)
+				       (eq score (score card))) hand)))
+	  (setq score s)))))
 
 (defun high-card (hand)
-  "Returns a list with the score and the symbol of the highest card in, <hand>.
+  "Returns a list with the score and the symbol of the highest card in <hand>.
 
   >> (mapcar #'high-card '((2S 3S) (AS 3H AH)(3H AH)))
   (3S AS AH)
-
   "
   (let ((highest-card '2C)
 	(highest-score 0))
