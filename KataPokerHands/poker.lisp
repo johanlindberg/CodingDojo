@@ -19,14 +19,14 @@
 
 ;; Scoring functions
 
-(defun four-of-a-kind (hand)
+(defun four-of-a-kind-p (hand)
   "Returns the score and the symbols of the cards, if <hand> contains three
    of a kind, otherwise nil.
 
-  >> (multiple-value-list (four-of-a-kind '(2S 2D 2C 2H 4D)))
+  >> (multiple-value-list (four-of-a-kind-p '(2S 2D 2C 2H 4D)))
   (2 (2S 2D 2C 2H))
   "
-  (n-of-a-kind 4 hand))
+  (n-of-a-kind-p 4 hand))
 
 (defun flush-p (hand)
   "Returns t if all 5 cards in <hand> are from the same suit.
@@ -40,20 +40,20 @@
   (and (eq 5 (length hand))
        (same-suit-p hand)))
 
-(defun three-of-a-kind (hand)
+(defun three-of-a-kind-p (hand)
   "Returns the score and the symbols of the cards, if <hand> contains three
    of a kind, otherwise nil.
 
-  >> (multiple-value-list (three-of-a-kind '(2S 2D 2C)))
+  >> (multiple-value-list (three-of-a-kind-p '(2S 2D 2C)))
   (2 (2S 2D 2C))
 
-  >> (multiple-value-list (three-of-a-kind '(2S 3D 4C)))
+  >> (multiple-value-list (three-of-a-kind-p '(2S 3D 4C)))
   (nil)
 
-  >> (multiple-value-list (three-of-a-kind '(4C 2S 4H 3D 4D)))
+  >> (multiple-value-list (three-of-a-kind-p '(4C 2S 4H 3D 4D)))
   (4 (4C 4H 4D))
   "
-  (n-of-a-kind 3 hand))
+  (n-of-a-kind-p 3 hand))
 
 (defun two-pair-p (hand)
   "Returns a list with the scores from the pairs if <hand> holds two pairs,
@@ -88,7 +88,7 @@
   >> (multiple-value-list (pair-p '(3S 4H 5D)))
   (nil)  
   "
-  (n-of-a-kind 2 hand))
+  (n-of-a-kind-p 2 hand))
 
 (defun high-card (hand)
   "Returns a list with the score and the symbol of the highest card in <hand>.
@@ -108,17 +108,17 @@
 
 ;; Helper functions
 
-(defun n-of-a-kind (n hand)
+(defun n-of-a-kind-p (n hand)
   "Returns the score and the symbols of the cards, if <hand> contains <n>
    of a kind, otherwise nil.
 
-  >> (multiple-value-list (n-of-a-kind 3 '(2S 2D 2C)))
+  >> (multiple-value-list (n-of-a-kind-p 3 '(2S 2D 2C)))
   (2 (2S 2D 2C))
 
-  >> (multiple-value-list (n-of-a-kind 3 '(2S 3D 4C)))
+  >> (multiple-value-list (n-of-a-kind-p 3 '(2S 3D 4C)))
   (nil)
 
-  >> (multiple-value-list (n-of-a-kind 3 '(4C 2S 4H 3D 4D)))
+  >> (multiple-value-list (n-of-a-kind-p 3 '(4C 2S 4H 3D 4D)))
   (4 (4C 4H 4D))
   "
   (let ((score 0)
@@ -128,7 +128,7 @@
 	  (progn
 	    (incf count)
 	    (when (eq count n)
-	      (return-from n-of-a-kind
+	      (return-from n-of-a-kind-p
 		(values score
 			(remove-if-not #'(lambda (card)
 					   (eq score (score card))) hand)))))
