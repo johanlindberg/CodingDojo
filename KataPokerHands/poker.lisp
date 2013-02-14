@@ -66,7 +66,7 @@
   (let ((highest-card '2C)
 	(highest-score 0))
     (dolist (card hand)
-      (let ((score (ceiling (/ (+ 1 (length (member card *values*))) 4))))
+      (let ((score (+ 1 (ceiling (/ (length (member card *values*)) 4)))))
 	(when (> score highest-score)
 	  (setq highest-score score
 		highest-card  card))))
