@@ -45,8 +45,8 @@
       (n-of-a-kind 3 hand)
     (when (and score
 	       (pair-p (remove-if #'(lambda (card)
-				      (member card cards)) hand))))
-    (return-from full-house-p score)))
+				      (member card cards)) hand)))
+      (return-from full-house-p score))))
       
 
 (defun flush-p (hand)
