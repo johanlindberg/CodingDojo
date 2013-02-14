@@ -32,8 +32,9 @@
   "Returns the score of the highest card if <hand> contains 5 cards with
    consecutive values, otherwise nil.
 
-  >> (straight-p '(2S 3S 4S 5S 6S))
-  6
+  >> (mapcar #'straight-p '((2S 3S 4S 5S 6S) (2S 4S 4D 5S 6S)
+                            (6S 5C 4C 3D 2S) (5D 7S 4H 8C 6S)))
+  (6 nil 6 8)
   "
   (let* ((scored-hand (sort (mapcar #'score hand) #'>))
 	 (prev (car scored-hand)))
@@ -44,16 +45,18 @@
     (car scored-hand)))
 
 (defun flush-p (hand)
-  "Returns t if all 5 cards in <hand> are from the same suit.
+  "Returns the score of the highest card if all 5 cards in <hand> are from
+   the same suit.
 
-  >> (flush-p '(2S 3S 4S 5S 6S)) t
+  >> (flush-p '(2S 3S 4S 5S 6S)) 6
   >> (flush-p '(2S 3S 4S 5S)) nil
   >> (flush-p '(2H 3S 4S 5S 6S)) nil
   >> (flush-p '(2S 3S 4S 5S 6H)) nil
-  >> (flush-p '(2H 3H 4H 5H 6H)) t
+  >> (flush-p '(2H 3H 4H 5H 6H)) 6
   "
-  (and (eq 5 (length hand))
-       (same-suit-p hand)))
+  (when (and (eq 5 (length hand))
+	     (same-suit-p hand))
+    (score (high-card hand))))
 
 (defun three-of-a-kind-p (hand)
   "Returns the score and the symbols of the cards, if <hand> contains three
