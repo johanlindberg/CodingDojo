@@ -35,7 +35,12 @@
   (5 8) ; See above. 5 is for the straight, 8 is for the high-card.
   "
   (let ((scores '()))
-    (cond ((three-of-a-kind-p hand)
+    (cond ((straight-p hand)
+	   (let ((score (straight-p hand)))
+	     (push score scores)
+	     (push 5 scores)))
+
+	  ((three-of-a-kind-p hand)
 	   (multiple-value-bind (score cards) (three-of-a-kind-p hand)
 	     (setf scores (sort
 			   (mapcar #'score
