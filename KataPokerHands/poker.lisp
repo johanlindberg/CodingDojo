@@ -50,7 +50,11 @@
         ; high-card.
   "
   (let ((scores '()))
-    (cond ((four-of-a-kind-p hand)
+    (cond ((straight-flush-p hand)
+           (push (straight-flush-p hand) scores)
+           (push 9 scores))
+
+          ((four-of-a-kind-p hand)
 	   (multiple-value-bind (score cards) (four-of-a-kind-p hand)
 	     (setf scores (sort
 			   (mapcar #'score
