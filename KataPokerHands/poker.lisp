@@ -30,6 +30,9 @@
 
   >> (rank '(JS 6H 4C 6D 6S))
   (4 6 11 4) ; See above. 4 is for the three-of-a-kind.
+
+  >> (rank '(4C 5D 6D 7H 8S))
+  (5 8) ; See above. 5 is for the straight, 8 is for the high-card.
   "
   (let ((scores '()))
     (cond ((three-of-a-kind-p hand)
