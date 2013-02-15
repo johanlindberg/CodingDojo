@@ -37,6 +37,8 @@
   >> (rank '(4C TC 3C 9C 8C))
   (6 10 9 8 4 3) ; See above. 6 is for flush.
 
+  >> (rank '(4C 8D 8S 4D 4S))
+  (7 4)
   "
   (let ((scores '()))
     (cond ((flush-p hand)
