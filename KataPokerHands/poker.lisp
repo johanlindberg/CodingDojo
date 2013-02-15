@@ -24,7 +24,18 @@
   (2 6 11 10 4) ; The 2 is for the pair. The 6 is for the score of the pair.
                 ; The rest of the scores are the rest of the cards high to low.
   "
-  t)
+  (let ((scores '()))
+    (cond ((pair-p hand)
+	   (multiple-value-bind (score cards) (pair-p hand)
+	     (setf scores (sort
+			   (mapcar #'score
+				   (remove-if #'(lambda (card)
+						  (member card cards))
+					      hand)) 
+			   #'>))
+	     (push score scores)
+	     (push 2 scores))))))
+				
 
 ;; Scoring functions
 
@@ -57,7 +68,7 @@
   (2 2 nil)
   "
   (multiple-value-bind (score cards)
-      (n-of-a-kind 3 hand)
+      (n-of-a-kind-p 3 hand)
     (when (and score
 	       (pair-p (remove-if #'(lambda (card)
 				      (member card cards)) hand)))
