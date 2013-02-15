@@ -23,6 +23,9 @@
   >> (rank '(JS 6H 4C TD 6S))
   (2 6 11 10 4) ; The 2 is for the pair. The 6 is for the score of the pair.
                 ; The rest of the scores are the rest of the cards high to low.
+
+  >> (rank '(JS 6H 4C 6D 6S))
+  (3 6 11 4) ; See above. 3 is for the three-of-a-kind.
   "
   (let ((scores '()))
     (cond ((pair-p hand)
