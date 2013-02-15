@@ -45,7 +45,18 @@
   (8 5 8)
   "
   (let ((scores '()))
-    (cond ((full-house-p hand)
+    (cond ((four-of-a-kind-p hand)
+	   (multiple-value-bind (score cards) (four-of-a-kind-p hand)
+	     (setf scores (sort
+			   (mapcar #'score
+				   (remove-if #'(lambda (card)
+						  (member card cards))
+					      hand)) 
+			   #'>))
+	     (push score scores)
+	     (push 8 scores)))
+
+          ((full-house-p hand)
            (push (full-house-p hand) scores)
            (push 7 scores))
 
