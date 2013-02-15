@@ -28,7 +28,18 @@
   (3 6 11 4) ; See above. 3 is for the three-of-a-kind.
   "
   (let ((scores '()))
-    (cond ((pair-p hand)
+    (cond ((three-of-a-kind-p hand)
+	   (multiple-value-bind (score cards) (three-of-a-kind-p hand)
+	     (setf scores (sort
+			   (mapcar #'score
+				   (remove-if #'(lambda (card)
+						  (member card cards))
+					      hand)) 
+			   #'>))
+	     (push score scores)
+	     (push 3 scores)))
+
+	  ((pair-p hand)
 	   (multiple-value-bind (score cards) (pair-p hand)
 	     (setf scores (sort
 			   (mapcar #'score
