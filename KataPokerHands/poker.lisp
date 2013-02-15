@@ -25,7 +25,8 @@
                 ; The rest of the scores are the rest of the cards high to low.
 
   >> (rank '(JS 6H 4C 6D 4S))
-  (3 6 11) ; See above. 3 is for the two pairs.
+  (3 6 4 11) ; See above. 3 is for the two pairs. 6 and 4 are the scores for
+             ; each of the pairs.
 
   >> (rank '(JS 6H 4C 6D 6S))
   (4 6 11 4) ; See above. 4 is for the three-of-a-kind.
@@ -41,6 +42,17 @@
 			   #'>))
 	     (push score scores)
 	     (push 4 scores)))
+
+	  ((two-pair-p hand)
+	   (multiple-value-bind (score cards) (two-pair-p hand)
+	     (setf scores (sort
+			   (mapcar #'score
+				   (remove-if #'(lambda (card)
+						  (member card cards))
+					      hand)) 
+			   #'>))
+	     (setf scores (append score scores))
+	     (push 3 scores)))
 
 	  ((pair-p hand)
 	   (multiple-value-bind (score cards) (pair-p hand)
@@ -140,7 +152,7 @@
    otherwise nil.
 
   >> (multiple-value-list (two-pair-p '(2H 3H 2S 3S AH)))
-  ((3 2) ((3H 3S) (2H 2S)))
+  ((3 2) (3H 3S 2H 2S))
   "
   (multiple-value-bind (first-score first-pair)
       (pair-p hand)
@@ -150,7 +162,7 @@
 				 (eq first-score (score card))) hand))
 	(when second-pair
 	  (return-from two-pair-p (values (list first-score second-score)
-					  (list first-pair second-pair))))))))
+					  (append first-pair second-pair))))))))
 
 (defun pair-p (hand)
   "Returns the score and the symbols of the pair cards, if <hand> contains
