@@ -41,7 +41,11 @@
   (7 4)
   "
   (let ((scores '()))
-    (cond ((flush-p hand)
+    (cond ((full-house-p hand)
+           (push (full-house-p hand) scores)
+           (push 7 scores))
+
+          ((flush-p hand)
            (setf scores (sort (mapcar #'score hand) #'>))
            (push 6 scores))
 
