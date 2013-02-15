@@ -32,7 +32,11 @@
   (4 6 11 4) ; See above. 4 is for the three-of-a-kind.
 
   >> (rank '(4C 5D 6D 7H 8S))
-  (5 8) ; See above. 5 is for the straight, 8 is for the high-card.
+  (5 8) ; 5 is for the straight, 8 is for the high-card.
+
+  >> (rank '(4C TC 3C 9C 8C))
+  (6 10 9 8 4 3) ; See above. 6 is for flush.
+
   "
   (let ((scores '()))
     (cond ((straight-p hand)
