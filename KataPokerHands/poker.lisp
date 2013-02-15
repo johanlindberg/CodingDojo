@@ -38,7 +38,11 @@
   (6 10 9 8 4 3) ; See above. 6 is for flush.
 
   >> (rank '(4C 8D 8S 4D 4S))
-  (7 4)
+  (7 4) ; 7 is for full-house, 4 is for the three-of-a-kind.
+        ; XXX Should I also include 8 in the score?
+
+  >> (rank '(5C 5D 8C 5H 5S))
+  (8 5 8)
   "
   (let ((scores '()))
     (cond ((full-house-p hand)
