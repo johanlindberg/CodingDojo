@@ -39,7 +39,11 @@
 
   "
   (let ((scores '()))
-    (cond ((straight-p hand)
+    (cond ((flush-p hand)
+           (setf scores (sort (mapcar #'score hand) #'>))
+           (push 6 scores))
+
+          ((straight-p hand)
 	   (let ((score (straight-p hand)))
 	     (push score scores)
 	     (push 5 scores)))
