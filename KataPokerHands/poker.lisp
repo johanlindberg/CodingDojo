@@ -42,7 +42,12 @@
         ; XXX Should I also include 8 in the score?
 
   >> (rank '(5C 5D 8C 5H 5S))
-  (8 5 8)
+  (8 5 8) ; 8 is for four-of-a-kind. 5 is the score of the cards
+          ; and 8 is the remaining card's score.
+
+  >> (rank '(4C 5C 6C 7C 8C))
+  (9 8) ; 9 is the score for a straight flush. 8 is for the
+        ; high-card.
   "
   (let ((scores '()))
     (cond ((four-of-a-kind-p hand)
