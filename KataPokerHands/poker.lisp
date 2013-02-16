@@ -165,8 +165,14 @@
                          (2S 3S 4S 5S 6H) (2H 3H 4H 5H 6H)))
   ((6 5 4 3 2) nil nil nil (6 5 4 3 2))
   "
-  (when (same-suit-p hand)
-    (scores hand)))
+  (dolist (suit (list *clubs* *diamonds* *hearts* *spades*))
+    (let ((same-suit t))
+      (dolist (card hand)
+	(unless (member card suit)
+	  (setq same-suit nil)
+	  (return)))
+      (when same-suit
+	(return-from flush-p (scores hand))))))
 
 (defun straight-p (hand)
   "Returns the score of the highest card if <hand> contains 5 cards with
@@ -272,20 +278,4 @@
   (2 3 4 5 6 7 8 9 10 11 12 13 14)
   "
   (+ 1 (ceiling (/ (length (member card *values*)) 4))))
-
-(defun same-suit-p (hand)
-  "Returns t if all cards in <hand> are of the same suit, otherwise returns nil.
-
-  >> (mapcar #'same-suit-p '((2H 3H) (2H 2S) (2H 3H 4H 5H 6H) (2H 3H 4H 5H 6H 2S)
-                             (2S 2H 3H 4H 5H 6H) (2S 2D 2H 2C) (2D 3D)))
-  (t nil t nil nil nil t)
-  "
-  (dolist (suit (list *clubs* *diamonds* *hearts* *spades*))
-    (let ((same-suit t))
-      (dolist (card hand)
-	(unless (member card suit)
-	  (setq same-suit nil)
-	  (return)))
-      (when same-suit
-	(return-from same-suit-p t)))))
 
