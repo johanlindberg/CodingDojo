@@ -48,6 +48,9 @@
   >> (rank '(4C 5C 6C 7C 8C))
   (9 8) ; 9 is the score for a straight flush. 8 is for the
         ; high-card.
+
+  >> (rank '(2H 3D 5S 9C KD))
+  (13 9 5 3 2)
   "
   (let ((scores '()))
     (cond ((straight-flush-p hand)
