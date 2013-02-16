@@ -161,13 +161,12 @@
   "Returns the score of the highest card if all 5 cards in <hand> are from
    the same suit.
 
-  >> (mapcar #'flush-p '((2S 3S 4S 5S 6S) (2S 3S 4S 5S) (2H 3S 4S 5S 6S)
+  >> (mapcar #'flush-p '((2S 3S 4S 5S 6S) (2S 3S 4S 5S 6C) (2H 3S 4S 5S 6S)
                          (2S 3S 4S 5S 6H) (2H 3H 4H 5H 6H)))
-  (6 nil nil nil 6)
+  ((6 5 4 3 2) nil nil nil (6 5 4 3 2))
   "
-  (when (and (eq 5 (length hand))
-	     (same-suit-p hand))
-    (score (high-card hand))))
+  (when (same-suit-p hand)
+    (scores hand)))
 
 (defun straight-p (hand)
   "Returns the score of the highest card if <hand> contains 5 cards with
@@ -235,22 +234,6 @@
   "
   (n-of-a-kind-p 2 hand))
 
-(defun high-card (hand)
-  "Returns a list with the score and the symbol of the highest card in <hand>.
-
-  >> (mapcar #'high-card '((2S 3S) (AS 3H AH)(3H AH)))
-  (3S AS AH)
-  "
-  (let ((highest-card '2C)
-	(highest-score 0))
-    (dolist (card hand)
-      (let ((s (score card)))
-	(when (> s highest-score)
-	  (setq highest-score s
-		highest-card card))))
-
-    highest-card))
-
 ;; Helper functions
 
 (defun n-of-a-kind-p (n hand)
@@ -278,6 +261,9 @@
 			(remove-if-not #'(lambda (card)
 					   (eq score (score card))) hand)))))
 	  (setq score s count 1)))))
+
+(defun scores (hand)
+  (sort (mapcar #'score hand) #'>))
 
 (defun score (card)
   "Returns the score for <card>.
