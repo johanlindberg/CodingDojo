@@ -50,7 +50,7 @@
         ; high-card.
 
   >> (rank '(2H 3D 5S 9C KD))
-  (13 9 5 3 2)
+  (1 13 9 5 3 2)
   "
   (let ((scores '()))
     (cond ((straight-flush-p hand)
@@ -112,7 +112,11 @@
 					      hand)) 
 			   #'>))
 	     (push score scores)
-	     (push 2 scores))))))
+	     (push 2 scores)))
+
+          (t
+           (setf scores (sort (mapcar #'score hand) #'>))
+           (push 1 scores)))))
 				
 
 ;; Scoring functions
