@@ -59,12 +59,9 @@
 
           ((four-of-a-kind-p hand)
 	   (multiple-value-bind (score cards) (four-of-a-kind-p hand)
-	     (setf scores (sort
-			   (mapcar #'score
-				   (remove-if #'(lambda (card)
-						  (member card cards))
-					      hand)) 
-			   #'>))
+	     (setf scores (scores (remove-if #'(lambda (card)
+                                                 (member card cards))
+                                             hand)))
 	     (push score scores)
 	     (push 8 scores)))
 
@@ -73,7 +70,7 @@
            (push 7 scores))
 
           ((flush-p hand)
-           (setf scores (sort (mapcar #'score hand) #'>))
+           (setf scores (scores hand))
            (push 6 scores))
 
           ((straight-p hand)
@@ -83,39 +80,30 @@
 
 	  ((three-of-a-kind-p hand)
 	   (multiple-value-bind (score cards) (three-of-a-kind-p hand)
-	     (setf scores (sort
-			   (mapcar #'score
-				   (remove-if #'(lambda (card)
-						  (member card cards))
-					      hand)) 
-			   #'>))
+	     (setf scores (scores (remove-if #'(lambda (card)
+                                                 (member card cards))
+                                             hand)))
 	     (push score scores)
 	     (push 4 scores)))
 
 	  ((two-pair-p hand)
 	   (multiple-value-bind (score cards) (two-pair-p hand)
-	     (setf scores (sort
-			   (mapcar #'score
-				   (remove-if #'(lambda (card)
-						  (member card cards))
-					      hand)) 
-			   #'>))
+	     (setf scores (scores (remove-if #'(lambda (card)
+                                                 (member card cards))
+                                             hand)))
 	     (setf scores (append score scores))
 	     (push 3 scores)))
 
 	  ((pair-p hand)
 	   (multiple-value-bind (score cards) (pair-p hand)
-	     (setf scores (sort
-			   (mapcar #'score
-				   (remove-if #'(lambda (card)
-						  (member card cards))
-					      hand)) 
-			   #'>))
+	     (setf scores (scores (remove-if #'(lambda (card)
+                                                 (member card cards))
+                                             hand)))
 	     (push score scores)
 	     (push 2 scores)))
 
           (t
-           (setf scores (sort (mapcar #'score hand) #'>))
+           (setf scores (scores hand))
            (push 1 scores)))))
 				
 
@@ -182,7 +170,7 @@
                             (6S 5C 4C 3D 2S) (5D 7S 4H 8C 6S)))
   (6 nil 6 8)
   "
-  (let* ((scored-hand (sort (mapcar #'score hand) #'>))
+  (let* ((scored-hand (scores hand))
 	 (prev (car scored-hand)))
     (dolist (score (cdr scored-hand))
       (if (eq prev (+ 1 score))
@@ -257,7 +245,7 @@
   "
   (let ((score 0)
 	(count 1))
-    (dolist (s (sort (mapcar #'score hand) #'>))
+    (dolist (s (scores hand))
       (if (eql s score)
 	  (progn
 	    (incf count)
