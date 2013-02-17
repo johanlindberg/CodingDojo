@@ -45,52 +45,36 @@
   >> (rank '(2H 3D 5S 9C KD))
   (1 13 9 5 3 2)
   "
-  (let ((scores '()))
-    (cond ((straight-flush-p hand)
-           (push (straight-flush-p hand) scores)
-           (push 9 scores))
+  (cond ((straight-flush-p hand)
+         (cons 9 (list (straight-flush-p hand))))
 
-          ((four-of-a-kind-p hand)
-	   (multiple-value-bind (score cards) (four-of-a-kind-p hand)
-	     (setf scores (scores (remaining hand cards)))
-	     (push score scores)
-	     (push 8 scores)))
+        ((four-of-a-kind-p hand)
+         (multiple-value-bind (score cards) (four-of-a-kind-p hand)
+           (cons 8 (cons score (scores (remaining hand cards))))))
 
-          ((full-house-p hand)
-           (push (full-house-p hand) scores)
-           (push 7 scores))
+        ((full-house-p hand)
+         (cons 7 (list (full-house-p hand))))
 
-          ((flush-p hand)
-           (setf scores (scores hand))
-           (push 6 scores))
+        ((flush-p hand)
+         (cons 6 (scores hand)))
 
-          ((straight-p hand)
-	   (let ((score (straight-p hand)))
-	     (push score scores)
-	     (push 5 scores)))
+        ((straight-p hand)
+         (cons 5 (list (straight-p hand))))
 
-	  ((three-of-a-kind-p hand)
-	   (multiple-value-bind (score cards) (three-of-a-kind-p hand)
-	     (setf scores (scores (remaining hand cards)))
-	     (push score scores)
-	     (push 4 scores)))
+        ((three-of-a-kind-p hand)
+         (multiple-value-bind (score cards) (three-of-a-kind-p hand)
+           (cons 4 (cons score (scores (remaining hand cards))))))
 
-	  ((two-pair-p hand)
-	   (multiple-value-bind (score cards) (two-pair-p hand)
-	     (setf scores (scores (remaining hand cards)))
-	     (setf scores (append score scores))
-	     (push 3 scores)))
+        ((two-pair-p hand)
+         (multiple-value-bind (score cards) (two-pair-p hand)
+           (cons 3 (append score (scores (remaining hand cards))))))
 
-	  ((pair-p hand)
-	   (multiple-value-bind (score cards) (pair-p hand)
-	     (setf scores (scores (remaining hand cards)))
-	     (push score scores)
-	     (push 2 scores)))
+        ((pair-p hand)
+         (multiple-value-bind (score cards) (pair-p hand)
+           (cons 2 (cons score (scores (remaining hand cards))))))
 
-          (t
-           (setf scores (scores hand))
-           (push 1 scores)))))
-				
+        (t
+         (cons 1 (scores hand)))))			
 
 ;; Scoring functions
 
