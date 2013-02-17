@@ -107,7 +107,7 @@
   (2 2 nil)
   "
   (multiple-value-bind (score cards)
-      (n-of-a-kind-p 3 hand)
+      (three-of-a-kind-p hand)
     (when (and score
 	       (pair-p (remaining hand cards)))
       (return-from full-house-p score))))
