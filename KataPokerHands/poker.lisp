@@ -52,9 +52,7 @@
 
           ((four-of-a-kind-p hand)
 	   (multiple-value-bind (score cards) (four-of-a-kind-p hand)
-	     (setf scores (scores (remove-if #'(lambda (card)
-                                                 (member card cards))
-                                             hand)))
+	     (setf scores (scores (remaining hand cards)))
 	     (push score scores)
 	     (push 8 scores)))
 
@@ -73,25 +71,19 @@
 
 	  ((three-of-a-kind-p hand)
 	   (multiple-value-bind (score cards) (three-of-a-kind-p hand)
-	     (setf scores (scores (remove-if #'(lambda (card)
-                                                 (member card cards))
-                                             hand)))
+	     (setf scores (scores (remaining hand cards)))
 	     (push score scores)
 	     (push 4 scores)))
 
 	  ((two-pair-p hand)
 	   (multiple-value-bind (score cards) (two-pair-p hand)
-	     (setf scores (scores (remove-if #'(lambda (card)
-                                                 (member card cards))
-                                             hand)))
+	     (setf scores (scores (remaining hand cards)))
 	     (setf scores (append score scores))
 	     (push 3 scores)))
 
 	  ((pair-p hand)
 	   (multiple-value-bind (score cards) (pair-p hand)
-	     (setf scores (scores (remove-if #'(lambda (card)
-                                                 (member card cards))
-                                             hand)))
+	     (setf scores (scores (remaining hand cards)))
 	     (push score scores)
 	     (push 2 scores)))
 
@@ -133,8 +125,7 @@
   (multiple-value-bind (score cards)
       (n-of-a-kind-p 3 hand)
     (when (and score
-	       (pair-p (remove-if #'(lambda (card)
-				      (member card cards)) hand)))
+	       (pair-p (remaining hand cards)))
       (return-from full-house-p score))))
       
 
@@ -197,8 +188,7 @@
       (pair-p hand)
     (when first-pair
       (multiple-value-bind (second-score second-pair)
-	  (pair-p (remove-if #'(lambda (card)
-				 (eq first-score (score card))) hand))
+	  (pair-p (remaining hand first-pair))
 	(when second-pair
 	  (return-from two-pair-p (values (list first-score second-score)
 					  (append first-pair second-pair))))))))
@@ -251,6 +241,12 @@
 
 (defun scores (hand)
   (sort (mapcar #'score hand) #'>))
+
+(defun remaining (hand cards)
+  "Returns a list of the cards in <hand> that are not in <cards>."
+  (remove-if #'(lambda (card)
+                 (member card cards))
+             hand))
 
 (defun suit (card)
   "Returns the suit for <card>."
