@@ -121,14 +121,11 @@
                          (2S 3S 4S 5S 6H) (2H 3H 4H 5H 6H)))
   ((6 5 4 3 2) nil nil nil (6 5 4 3 2))
   "
-  (dolist (suit (list *clubs* *diamonds* *hearts* *spades*))
-    (let ((same-suit t))
-      (dolist (card hand)
-	(unless (member card suit)
-	  (setq same-suit nil)
-	  (return)))
-      (when same-suit
-	(return-from flush-p (scores hand))))))
+  (let ((suit (suit (car hand))))
+    (dolist (card (cdr hand))
+      (unless (eq suit (suit card))
+        (return-from flush-p)))
+    (scores hand)))
 
 (defun straight-p (hand)
   "Returns the score of the highest card if <hand> contains 5 cards with
