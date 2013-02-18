@@ -17,6 +17,9 @@
 
   >> (compare '(Black 2H 3D 5S 9C KD) '(White 2C 3H 4S 8C KH))
   Black
+
+  >> (compare '(Black 2H 3D 5S 9C KD) '(White 2D 3H 5C 9S KH))
+  Tie
   "
   (let ((high-score (rank (cdar hands)))
         (winner (caar hands)))
