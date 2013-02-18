@@ -22,18 +22,23 @@
   Tie
   "
   (let ((high-score (rank (cdar hands)))
-        (winner (caar hands)))
+        (winner (caar hands))
+        (tie? nil))
     (dolist (hand (cdr hands))
-      (tree-equal high-score
-                  (rank (cdr hand))
-                  :test #'(lambda (hs s)
-                            (if (eq s hs)
-                                t
-                                (when (> s hs)
-                                  (setq high-score (rank (cdr hand)))
-                                  (setq winner (car hand))
-                                  nil)))))
-    winner))
+      (let ((scores (rank (cdr hand))))
+        (setq tie? (tree-equal high-score scores :test #'eq))
+        (tree-equal high-score
+                    (rank (cdr hand))
+                    :test #'(lambda (hs s)
+                              (if (eq s hs)
+                                  t
+                                  (when (> s hs)
+                                    (setq high-score (rank (cdr hand)))
+                                    (setq winner (car hand))
+                                    nil))))))
+    (if tie?
+        'tie
+        winner)))
 
 (defun rank (hand)
   "Rank <hand> (using poker rules) and returns a list with scores.
