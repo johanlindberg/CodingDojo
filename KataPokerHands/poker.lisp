@@ -12,7 +12,19 @@
   >> (compare '(Black 2H 3D 5S 9C KD) '(White 2C 3H 4S 8C AH))
   White
   "
-  t)
+  (let ((high-score (rank (cdar hands)))
+        (winner (caar hands)))
+    (dolist (hand (cdr hands))
+      (tree-equal high-score
+                  (rank (cdr hand))
+                  :test #'(lambda (hs s)
+                            (if (> s hs)
+                                (progn
+                                  (setq high-score (rank (cdr hand)))
+                                  (setq winner (car hand))
+                                  nil)
+                                t))))
+    winner))
 
 (defun rank (hand)
   "Rank <hand> (using poker rules) and returns a list with scores.
