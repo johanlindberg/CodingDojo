@@ -6,6 +6,14 @@
 (defparameter *hearts*   '(AH KH QH JH TH 9H 8H 7H 6H 5H 4H 3H 2H))
 (defparameter *spades*   '(AS KS QS JS TS 9S 8S 7S 6S 5S 4S 3S 2S))
 
+(defun compare (&rest hands)
+  "Compares all <hands> and returns the winning one.
+
+  >> (compare '(Black 2H 3D 5S 9C KD) '(White 2C 3H 4S 8C AH))
+  White
+  "
+  t)
+
 (defun rank (hand)
   "Rank <hand> (using poker rules) and returns a list with scores.
 
