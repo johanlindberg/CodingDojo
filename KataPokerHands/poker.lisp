@@ -119,10 +119,8 @@
   >> (mapcar #'straight-flush-p '((2S 3S 4S 5S 6S) (2S 3S 4S 5S 6D) (2S 3S 4S 5S 7S)))
   (6 nil nil)
   "
-  (let ((score (straight-p hand)))
-    (when (and score
-	       (flush-p hand))
-      (return-from straight-flush-p score))))
+  (when (flush-p hand)
+    (straight-p hand)))
 
 (defun four-of-a-kind-p (hand)
   "Returns the score and the symbols of the cards, if <hand> contains three
